@@ -47,7 +47,7 @@ class UI {
             <div class="img-container">
                 <img src=${product.image} alt="product" class="product-img">
                 <button class="bag-btn" data-id=${product.id}>
-                    <i class="fas fa-shopping-cart">add to bag</i>
+                    <i class="fas fa-shopping-cart">add to cart</i>
                 </button>
             </div>
             <h3>${product.title}</h3>
@@ -144,6 +144,14 @@ class UI {
           this.clearCart();
       });
       //cart functionality
+        cartContent.addEventListener('click',event=>{
+             if(event.target.classList.contains('remove-item')){
+                 let removeItem = event.target;
+                 let id = removeItem.dataset.id;
+                 cartContent.removeChild(removeItem.parentElement.parentElement)
+                 this.removeItem(id)
+             }
+        })
     }
     clearCart(){
         let cartItems = cart.map(item => item.id);
@@ -159,7 +167,7 @@ class UI {
       Storage.saveCart(cart);
       let button  = this.getSingleButton(id)
         button.disabled = false;
-        button.innerHTML = `<i class="fas fa-shopping-cart"></i>add to bag`
+        button.innerHTML = `<i class="fas fa-shopping-cart"></i>add to cart`
     }
     getSingleButton(id){
       return buttonsDOM.find(button => button.dataset.id === id);
